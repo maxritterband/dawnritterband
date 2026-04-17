@@ -70,7 +70,7 @@
       letter-spacing: 0.28em;
       text-transform: uppercase;
       color: var(--teal);
-      margin-bottom: 1.5rem;
+      margin-bottom: 0.75rem;
       opacity: 0;
       animation: fadeUp 0.9s ease 0.3s both;
     }
@@ -291,6 +291,86 @@
     }
     .memory-name { font-weight: 500; color: var(--teal-dark); }
 
+    /* PHOTO LIGHTBOX */
+    .gallery-grid img {
+      cursor: zoom-in;
+      transition: transform 0.25s ease, opacity 0.25s ease;
+    }
+    .gallery-grid img:hover {
+      transform: scale(1.03);
+      opacity: 0.9;
+    }
+
+    .photo-lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(8, 32, 38, 0.97);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 1.25rem;
+      padding: 2rem;
+    }
+    .photo-lightbox.open { display: flex; }
+
+    .photo-lightbox-img {
+      max-height: 82vh;
+      max-width: min(880px, 92vw);
+      border-radius: 6px;
+      box-shadow: 0 40px 100px rgba(0,0,0,0.6);
+      object-fit: contain;
+      animation: fadeUp 0.25s ease both;
+    }
+
+    .photo-lightbox-close {
+      font-size: 0.67rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      background: none;
+      border: none;
+      cursor: pointer;
+      transition: color 0.2s;
+      padding: 0.25rem 0.5rem;
+    }
+    .photo-lightbox-close:hover { color: rgba(255,255,255,0.75); }
+
+    /* Prev/next arrows */
+    .photo-lightbox-nav {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+    .photo-lightbox-arrow {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.6);
+      font-size: 1.1rem;
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, color 0.2s;
+    }
+    .photo-lightbox-arrow:hover {
+      background: rgba(43,158,179,0.25);
+      color: white;
+    }
+    .photo-lightbox-counter {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      color: rgba(255,255,255,0.3);
+      min-width: 4rem;
+      text-align: center;
+    }
+
     /* Responsive */
     @media (max-width: 780px) {
       .tribute-inner {
@@ -401,12 +481,6 @@
         <img src="photos/IMG_7649 2.JPG" alt="Img 7649 2" />
         <img src="photos/IMG_8930.JPG" alt="Img 8930" />
       </div>
-        <div class="gallery-placeholder"><span>Add a photo</span></div>
-        <div class="gallery-placeholder"><span>Add a photo</span></div>
-        <div class="gallery-placeholder"><span>Add a photo</span></div>
-        <div class="gallery-placeholder"><span>Add a photo</span></div>
-        <div class="gallery-placeholder"><span>Add a photo</span></div>
-      </div>
     </div>
   </section>
 
@@ -461,6 +535,17 @@
       -->
     </div>
   </section>
+
+  <!-- PHOTO LIGHTBOX -->
+  <div class="photo-lightbox" id="photo-lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer">
+    <img src="" alt="" class="photo-lightbox-img" id="photo-lightbox-img" />
+    <div class="photo-lightbox-nav">
+      <button class="photo-lightbox-arrow" id="photo-prev" aria-label="Previous photo">&#8592;</button>
+      <span class="photo-lightbox-counter" id="photo-counter"></span>
+      <button class="photo-lightbox-arrow" id="photo-next" aria-label="Next photo">&#8594;</button>
+    </div>
+    <button class="photo-lightbox-close" id="photo-lightbox-close">&#215; Close</button>
+  </div>
 
   <!-- FOOTER -->
   <footer class="site-footer">

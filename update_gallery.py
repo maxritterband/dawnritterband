@@ -35,7 +35,7 @@ def get_photos():
 def build_gallery_html(photos):
     """Build the gallery grid HTML from a list of photo filenames."""
     if not photos:
-        return '        <div class="gallery-placeholder"><span>No photos yet — add some to the photos/ folder</span></div>'
+        return '        <!-- No photos yet — add images to the photos/ folder and run this script -->'
 
     lines = []
     for filename in photos:

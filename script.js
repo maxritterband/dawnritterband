@@ -162,3 +162,78 @@ setupForm(
     if (e.key === 'Escape') closeMenu();
   });
 })();
+
+
+// --- Photo Gallery Lightbox ---
+(function () {
+  const lightbox  = document.getElementById('photo-lightbox');
+  const imgEl     = document.getElementById('photo-lightbox-img');
+  const closeBtn  = document.getElementById('photo-lightbox-close');
+  const prevBtn   = document.getElementById('photo-prev');
+  const nextBtn   = document.getElementById('photo-next');
+  const counter   = document.getElementById('photo-counter');
+
+  if (!lightbox) return;
+
+  let photos = [];
+  let current = 0;
+
+  // Collect all gallery images on page load and after reveal
+  function collectPhotos() {
+    photos = Array.from(document.querySelectorAll('.gallery-grid img'));
+    photos.forEach(function (img, i) {
+      img.addEventListener('click', function () { open(i); });
+    });
+  }
+
+  function open(index) {
+    current = index;
+    show();
+    lightbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function close() {
+    lightbox.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function show() {
+    const photo = photos[current];
+    imgEl.src = photo.src;
+    imgEl.alt = photo.alt;
+    counter.textContent = (current + 1) + ' / ' + photos.length;
+    // Re-trigger animation
+    imgEl.style.animation = 'none';
+    imgEl.offsetHeight; // reflow
+    imgEl.style.animation = '';
+  }
+
+  function prev() { current = (current - 1 + photos.length) % photos.length; show(); }
+  function next() { current = (current + 1) % photos.length; show(); }
+
+  closeBtn.addEventListener('click', close);
+  prevBtn.addEventListener('click', prev);
+  nextBtn.addEventListener('click', next);
+
+  // Close on backdrop click
+  lightbox.addEventListener('click', function (e) {
+    if (e.target === lightbox) close();
+  });
+
+  // Keyboard navigation
+  document.addEventListener('keydown', function (e) {
+    if (!lightbox.classList.contains('open')) return;
+    if (e.key === 'Escape')      close();
+    if (e.key === 'ArrowLeft')   prev();
+    if (e.key === 'ArrowRight')  next();
+  });
+
+  // Wait for images to be in the DOM (they may be added by update_gallery.py)
+  collectPhotos();
+  // Also re-collect after scroll reveals in case grid was hidden
+  document.addEventListener('scroll', function collectOnce() {
+    collectPhotos();
+    document.removeEventListener('scroll', collectOnce);
+  }, { once: true });
+})();
