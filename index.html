@@ -132,6 +132,23 @@
       z-index: 1;
     }
 
+    /* HERO PHOTO */
+    .hero-photo-wrap {
+      margin: 1.8rem auto 0;
+      width: fit-content;
+      opacity: 0;
+      animation: fadeUp 1s ease 0.65s both;
+    }
+
+    .hero-photo {
+      width: min(260px, 55vw);
+      display: block;
+      /* The image already has a black background + arch frame —
+         we drop the black and let the arch frame shine */
+      mix-blend-mode: lighten;
+      filter: drop-shadow(0 16px 40px rgba(0,0,0,0.5));
+    }
+
     /* TRIBUTE */
     .tribute {
       padding: 6rem 1.5rem;
@@ -293,6 +310,9 @@
     <div class="hero-content">
       <p class="hero-eyebrow">In Loving Memory</p>
       <h1 class="hero-name">Dawn<br>Ritterband</h1>
+      <div class="hero-photo-wrap">
+        <img src="dawn_ritterband.png" alt="Dawn Ritterband" class="hero-photo" />
+      </div>
       <div class="hero-name-underline"></div>
       <p class="hero-dates">June 15, 1971 &nbsp;&bull;&nbsp; February 17, 2026</p>
       <p class="hero-tagline">
