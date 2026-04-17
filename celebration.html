@@ -14,6 +14,7 @@
     /* INVITATION HERO — full-bleed, invitation as centerpiece */
     .col-hero {
       min-height: 100vh;
+      min-height: 100dvh;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -343,8 +344,11 @@
 
   <!-- NAV -->
   <nav class="site-nav">
-    <a href="index.html" class="nav-wordmark"><em>Dawn</em> Ritterband</a>
-    <ul class="nav-links">
+    <a href="index.html" class="nav-wordmark">Dawn Ritterband</a>
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
       <li><a href="index.html">Home</a></li>
       <li><a href="celebration.html" class="active">Celebration of Life</a></li>
       <li><a href="#rsvp" class="btn" style="margin-top:0; padding: 0.5rem 1.25rem; font-size:0.65rem;">RSVP</a></li>

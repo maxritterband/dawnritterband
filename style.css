@@ -110,7 +110,7 @@ h2 { font-size: clamp(2rem, 4vw, 2.9rem); margin-bottom: 1.25rem; }
   letter-spacing: 0.04em;
   white-space: nowrap;
 }
-.nav-wordmark em { font-style: italic; color: var(--teal); }
+.nav-wordmark em { font-style: normal; color: rgba(255,255,255,0.88); }
 
 .nav-links {
   display: flex;
@@ -126,7 +126,6 @@ h2 { font-size: clamp(2rem, 4vw, 2.9rem); margin-bottom: 1.25rem; }
   text-transform: uppercase;
   color: rgba(255,255,255,0.6);
   text-decoration: none;
-  transition: color 0.2s;
   padding-bottom: 2px;
   border-bottom: 1px solid transparent;
   transition: color 0.2s, border-color 0.2s;
@@ -136,6 +135,31 @@ h2 { font-size: clamp(2rem, 4vw, 2.9rem); margin-bottom: 1.25rem; }
   color: var(--teal);
   border-bottom-color: var(--teal);
 }
+
+/* Hamburger button — hidden on desktop */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  z-index: 110;
+}
+.nav-hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: rgba(255,255,255,0.8);
+  border-radius: 2px;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+/* X state */
+.nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2) { opacity: 0; }
+.nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
 /* =============================================
    BUTTONS
@@ -351,18 +375,49 @@ select {
 }
 
 /* =============================================
-   RESPONSIVE
+   RESPONSIVE / HAMBURGER NAV
    ============================================= */
 
 @media (max-width: 680px) {
   .form-row.two-col { grid-template-columns: 1fr; }
   .form-box { padding: 1.75rem; }
-  .nav-links { gap: 1.5rem; }
-}
 
-@media (max-width: 420px) {
-  .site-nav { padding: 0 4%; height: 56px; }
-  .nav-wordmark { font-size: 0.9rem; }
-  .nav-links { gap: 1.1rem; }
-  .nav-links a { font-size: 0.62rem; }
+  /* Show hamburger, hide inline nav links */
+  .nav-hamburger { display: flex; }
+
+  .nav-links {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(8, 32, 38, 0.98);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2.5rem;
+    z-index: 105;
+    animation: fadeIn 0.2s ease both;
+  }
+
+  .nav-links.open { display: flex; }
+
+  .nav-links a {
+    font-size: 1rem;
+    letter-spacing: 0.15em;
+    color: rgba(255,255,255,0.75);
+  }
+
+  .nav-links a:hover,
+  .nav-links a.active {
+    color: var(--teal);
+    border-bottom-color: var(--teal);
+  }
+
+  /* RSVP button in mobile menu */
+  .nav-links .btn {
+    font-size: 0.75rem;
+    padding: 0.75rem 2rem;
+    margin-top: 0;
+  }
 }
