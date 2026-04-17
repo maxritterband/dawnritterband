@@ -266,6 +266,9 @@
       border-top: 1px solid rgba(43,158,179,0.25);
       width: 100%;
       max-width: 420px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
     .calendar-label {
       font-size: 0.65rem;
@@ -280,13 +283,15 @@
       display: flex;
       gap: 0.75rem;
       justify-content: center;
+      align-items: center;
       flex-wrap: wrap;
+      width: 100%;
     }
     .cal-btn {
       display: inline-block;
-      background: rgba(43,158,179,0.15);
-      border: 1.5px solid rgba(43,158,179,0.4);
-      color: rgba(255,255,255,0.85);
+      background: var(--teal-dark);
+      border: 1.5px solid var(--teal-dark);
+      color: white;
       font-family: var(--font-body);
       font-size: 0.75rem;
       letter-spacing: 0.08em;
@@ -294,12 +299,11 @@
       border-radius: 3px;
       cursor: pointer;
       text-decoration: none;
-      transition: background 0.2s, border-color 0.2s, color 0.2s;
+      transition: background 0.2s, border-color 0.2s;
     }
     .cal-btn:hover {
-      background: rgba(43,158,179,0.3);
-      border-color: var(--teal);
-      color: white;
+      background: var(--teal-deep);
+      border-color: var(--teal-deep);
     }
 
     /* INVITATION LIGHTBOX */
@@ -444,21 +448,18 @@
 
       <div class="service-grid reveal">
         <div class="service-card">
-          <div class="service-card-icon">&#128197;</div>
           <div class="service-card-label">Date</div>
           <div class="service-card-value">Saturday, June 13, 2026</div>
           <div class="service-card-sub">11:30 AM</div>
         </div>
 
         <div class="service-card">
-          <div class="service-card-icon">&#127828;</div>
           <div class="service-card-label">Venue</div>
           <div class="service-card-value">Whitehall Farm &amp; Vineyard</div>
           <div class="service-card-sub">6672 Blenheim Road<br />Scottsville, VA 24590</div>
         </div>
 
         <div class="service-card">
-          <div class="service-card-icon">&#128205;</div>
           <div class="service-card-label">Directions</div>
           <div class="service-card-value">
             <a href="https://maps.google.com/?q=6672+Blenheim+Road+Scottsville+VA+24590"
@@ -472,7 +473,6 @@
         </div>
 
         <div class="service-card">
-          <div class="service-card-icon">&#128140;</div>
           <div class="service-card-label">Attire</div>
           <div class="service-card-value">
             <!--✏️ Add attire guidance, e.g. "Casual, comfortable, colorful" -->

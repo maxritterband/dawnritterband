@@ -69,7 +69,7 @@ setupForm(
   // Event details
   const EVENT = {
     title:    "Celebration of Life — Dawn Ritterband",
-    location: "Whitehall Farm & Vineyard, 6672 Blenheim Road, Scottsville, VA 24590",
+    location: "6672 Blenheim Road, Scottsville, VA 24590",
     details:  "A celebration of the life of Dawn Ritterband.",
     // June 13 2026 11:30 AM Eastern (UTC-4 in June)
     startUtc: "20260613T153000Z",  // 11:30 AM ET = 15:30 UTC
