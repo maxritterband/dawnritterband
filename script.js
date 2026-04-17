@@ -80,3 +80,49 @@ setupForm(
     }
   });
 })();
+
+
+// --- Invitation Lightbox (celebration.html) ---
+(function () {
+  const trigger   = document.getElementById('invitation-trigger');
+  const lightbox  = document.getElementById('invitation-lightbox');
+  const closeBtn  = document.getElementById('lightbox-close');
+  const rsvpBtn   = document.getElementById('lightbox-rsvp-btn');
+
+  if (!trigger || !lightbox) return;
+
+  function openLightbox() {
+    lightbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  trigger.addEventListener('click', openLightbox);
+
+  closeBtn.addEventListener('click', closeLightbox);
+
+  // Close on backdrop click (outside image/buttons)
+  lightbox.addEventListener('click', function (e) {
+    if (e.target === lightbox) closeLightbox();
+  });
+
+  // Escape key closes it
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeLightbox();
+  });
+
+  // RSVP button: close lightbox then scroll to RSVP section
+  rsvpBtn.addEventListener('click', function () {
+    closeLightbox();
+    setTimeout(function () {
+      const rsvpSection = document.getElementById('rsvp');
+      if (rsvpSection) {
+        rsvpSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 200); // small delay lets the lightbox close before scrolling
+  });
+})();
