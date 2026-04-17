@@ -85,7 +85,7 @@ document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
       "DTSTART;TZID=America/New_York:" + EVENT.startLocal,
       "DTEND;TZID=America/New_York:"   + EVENT.endLocal,
       "SUMMARY:"     + EVENT.title,
-      "LOCATION:"    + EVENT.location,
+      "LOCATION:"    + EVENT.location.replace(/,/g, "\\,"),
       "DESCRIPTION:" + EVENT.details,
       "END:VEVENT",
       "END:VCALENDAR"
