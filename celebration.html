@@ -259,6 +259,49 @@
 
     .rsvp select option { background: var(--teal-deep); color: white; }
 
+    /* Add to calendar prompt */
+    .calendar-prompt {
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(43,158,179,0.25);
+      width: 100%;
+      max-width: 420px;
+    }
+    .calendar-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 0.85rem;
+      font-family: var(--font-body);
+      font-style: normal;
+    }
+    .calendar-btns {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .cal-btn {
+      display: inline-block;
+      background: rgba(43,158,179,0.15);
+      border: 1.5px solid rgba(43,158,179,0.4);
+      color: rgba(255,255,255,0.85);
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      padding: 0.65rem 1.25rem;
+      border-radius: 3px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s, border-color 0.2s, color 0.2s;
+    }
+    .cal-btn:hover {
+      background: rgba(43,158,179,0.3);
+      border-color: var(--teal);
+      color: white;
+    }
+
     /* INVITATION LIGHTBOX */
     .col-invitation-wrap {
       cursor: zoom-in;

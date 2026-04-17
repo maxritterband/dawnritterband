@@ -61,10 +61,116 @@ setupForm(
   'Thank you for sharing your memory of Dawn. It means so much to the family.'
 );
 
-setupForm(
-  'rsvp-form',
-  'Your RSVP has been received. We look forward to seeing you on June 13th to celebrate Dawn.'
-);
+// RSVP form — with calendar option if attending
+(function () {
+  const form = document.getElementById('rsvp-form');
+  if (!form) return;
+
+  // Event details
+  const EVENT = {
+    title:    "Celebration of Life — Dawn Ritterband",
+    location: "Whitehall Farm & Vineyard, 6672 Blenheim Road, Scottsville, VA 24590",
+    details:  "A celebration of the life of Dawn Ritterband.",
+    // June 13 2026 11:30 AM Eastern (UTC-4 in June)
+    startUtc: "20260613T153000Z",  // 11:30 AM ET = 15:30 UTC
+    endUtc:   "20260613T193000Z",  // assumes ~4 hr event
+    startLocal: "20260613T113000",
+    endLocal:   "20260613T153000",
+  };
+
+  function makeGoogleUrl() {
+    const base = "https://calendar.google.com/calendar/render?action=TEMPLATE";
+    return base
+      + "&text="     + encodeURIComponent(EVENT.title)
+      + "&dates="    + EVENT.startUtc + "/" + EVENT.endUtc
+      + "&details="  + encodeURIComponent(EVENT.details)
+      + "&location=" + encodeURIComponent(EVENT.location);
+  }
+
+  function makeIcsContent() {
+    return [
+      "BEGIN:VCALENDAR",
+      "VERSION:2.0",
+      "BEGIN:VEVENT",
+      "DTSTART;TZID=America/New_York:" + EVENT.startLocal,
+      "DTEND;TZID=America/New_York:"   + EVENT.endLocal,
+      "SUMMARY:"   + EVENT.title,
+      "LOCATION:"  + EVENT.location,
+      "DESCRIPTION:" + EVENT.details,
+      "END:VEVENT",
+      "END:VCALENDAR"
+    ].join("
+");
+  }
+
+  function downloadIcs() {
+    const blob = new Blob([makeIcsContent()], { type: "text/calendar;charset=utf-8" });
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement("a");
+    a.href     = url;
+    a.download = "dawn-ritterband-celebration.ics";
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  function buildThankYou(isAttending) {
+    const box = document.createElement('div');
+    box.className = 'thank-you-box';
+
+    if (isAttending) {
+      box.innerHTML = `
+        <div class="thank-you-check">&#10003;</div>
+        <p>Your RSVP has been received. We look forward to seeing you on June 13th to celebrate Dawn.</p>
+        <div class="calendar-prompt">
+          <p class="calendar-label">Add to your calendar</p>
+          <div class="calendar-btns">
+            <button class="cal-btn" id="cal-apple">&#128197; Apple Calendar</button>
+            <a class="cal-btn" id="cal-google" href="${makeGoogleUrl()}" target="_blank" rel="noopener">&#128197; Google Calendar</a>
+          </div>
+        </div>
+      `;
+    } else {
+      box.innerHTML = `
+        <div class="thank-you-check">&#10003;</div>
+        <p>Thank you for letting us know. You will be missed, and Dawn's memory will be with you that day.</p>
+      `;
+    }
+    return box;
+  }
+
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const btn = form.querySelector('button[type="submit"]');
+    btn.textContent = 'Sending…';
+    btn.disabled = true;
+
+    const attendingVal = form.querySelector('[name="attending"]').value;
+    const isAttending  = attendingVal === 'yes' || attendingVal === 'maybe';
+
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (res.ok) {
+        const box = buildThankYou(isAttending);
+        form.replaceWith(box);
+
+        // Wire up Apple Calendar download after element is in DOM
+        const appleBtn = document.getElementById('cal-apple');
+        if (appleBtn) appleBtn.addEventListener('click', downloadIcs);
+      } else {
+        btn.textContent = 'Something went wrong — please try again.';
+        btn.disabled = false;
+      }
+    } catch {
+      btn.textContent = 'Error sending — please try again.';
+      btn.disabled = false;
+    }
+  });
+})();
 
 
 // --- Mark active nav link ---
