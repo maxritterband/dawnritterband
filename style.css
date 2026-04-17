@@ -390,39 +390,53 @@ select {
   /* Show hamburger, hide inline nav links */
   .nav-hamburger { display: flex !important; }
 
+  /* Dropdown menu — slides down from under the nav bar */
   .nav-links {
     display: none;
     position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(8, 32, 38, 0.98);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    top: 64px; /* sits flush below the nav bar */
+    left: 0;
+    right: 0;
+    background: rgba(8, 32, 38, 0.99);
+    border-bottom: 1px solid rgba(43, 158, 179, 0.25);
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 2.5rem;
-    z-index: 105;
-    animation: fadeIn 0.2s ease both;
+    align-items: stretch;
+    gap: 0;
+    z-index: 99;
+    padding: 0.5rem 0 1rem;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.35);
   }
 
   .nav-links.open { display: flex; }
 
+  .nav-links li {
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .nav-links li:last-child { border-bottom: none; }
+
   .nav-links a {
-    font-size: 1rem;
+    display: block;
+    font-size: 0.8rem;
     letter-spacing: 0.15em;
     color: rgba(255,255,255,0.75);
+    padding: 1rem 1.5rem;
+    border-bottom: none;
   }
 
   .nav-links a:hover,
   .nav-links a.active {
     color: var(--teal);
-    border-bottom-color: var(--teal);
+    background: rgba(43,158,179,0.07);
+    border-bottom: none;
   }
 
-  /* RSVP button in mobile menu */
+  /* RSVP button in dropdown */
   .nav-links .btn {
+    display: block;
     font-size: 0.75rem;
-    padding: 0.75rem 2rem;
-    margin-top: 0;
+    margin: 0.75rem 1.5rem 0;
+    padding: 0.75rem 1.5rem;
+    text-align: center;
+    border-radius: 2px;
   }
 }

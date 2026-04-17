@@ -12,10 +12,14 @@
     /* ── PAGE-SPECIFIC: INDEX ── */
 
     /* HERO */
+    /* Safari-proof full-screen hero:
+       Use a tall min-height + a ::before pseudo on body to always
+       cover the viewport with the deep teal, even when browser chrome
+       is present. This prevents the ivory background peeking through. */
     .hero {
       position: relative;
       min-height: 100vh;
-      min-height: 100dvh;
+      min-height: -webkit-fill-available;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -23,6 +27,12 @@
       text-align: center;
       padding: 80px 2rem 5rem;
       overflow: hidden;
+    }
+
+    /* Extend hero background color all the way to page bottom
+       so Safari's rubber-band overscroll shows teal, not ivory */
+    body {
+      background-color: var(--teal-deep);
     }
 
     .hero-bg {

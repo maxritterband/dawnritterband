@@ -14,7 +14,7 @@
     /* INVITATION HERO — full-bleed, invitation as centerpiece */
     .col-hero {
       min-height: 100vh;
-      min-height: 100dvh;
+      min-height: -webkit-fill-available;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -23,6 +23,11 @@
       position: relative;
       overflow: hidden;
       text-align: center;
+    }
+
+    /* Extend teal to page bottom so Safari shows no ivory gap */
+    body {
+      background-color: var(--teal-deep);
     }
 
     /* Deep teal background with turquoise radial glow */
