@@ -525,5 +525,18 @@
   </footer>
 
   <script src="script.js"></script>
+  <script>
+    // Auto-open lightbox if page was loaded via dawn.ritterband.com/rsvp
+    (function () {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('rsvp') === '1') {
+        // Wait for the page to finish rendering before opening
+        window.addEventListener('load', function () {
+          var trigger = document.getElementById('invitation-trigger');
+          if (trigger) trigger.click();
+        });
+      }
+    })();
+  </script>
 </body>
 </html>
