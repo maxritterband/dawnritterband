@@ -136,7 +136,7 @@ h2 { font-size: clamp(2rem, 4vw, 2.9rem); margin-bottom: 1.25rem; }
   border-bottom-color: var(--teal);
 }
 
-/* Hamburger button — hidden on desktop */
+/* Hamburger button — hidden on desktop, shown only on mobile */
 .nav-hamburger {
   display: none;
   flex-direction: column;
@@ -147,6 +147,11 @@ h2 { font-size: clamp(2rem, 4vw, 2.9rem); margin-bottom: 1.25rem; }
   cursor: pointer;
   padding: 4px;
   z-index: 110;
+  /* Prevent any default button outline/background showing */
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  border-radius: 0;
 }
 .nav-hamburger span {
   display: block;
@@ -383,7 +388,7 @@ select {
   .form-box { padding: 1.75rem; }
 
   /* Show hamburger, hide inline nav links */
-  .nav-hamburger { display: flex; }
+  .nav-hamburger { display: flex !important; }
 
   .nav-links {
     display: none;
