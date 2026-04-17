@@ -99,8 +99,7 @@ setupForm(
       "DESCRIPTION:" + EVENT.details,
       "END:VEVENT",
       "END:VCALENDAR"
-    ].join("
-");
+    ].join("\r\n");
   }
 
   function downloadIcs() {
