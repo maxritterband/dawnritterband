@@ -143,10 +143,6 @@
     .hero-photo {
       width: min(260px, 55vw);
       display: block;
-      /* The image already has a black background + arch frame —
-         we drop the black and let the arch frame shine */
-      mix-blend-mode: lighten;
-      filter: drop-shadow(0 16px 40px rgba(0,0,0,0.5));
     }
 
     /* TRIBUTE */
@@ -421,7 +417,7 @@
         ✏️ SETUP: Go to formspree.io, create a free account, create a new form,
         and replace YOUR_MEMORIES_FORM_ID with your actual form ID.
       -->
-      <form class="form-box reveal" action="https://formspree.io/f/xwvaoqva" method="POST" id="memory-form">
+      <form class="form-box reveal" action="https://formspree.io/f/YOUR_MEMORIES_FORM_ID" method="POST" id="memory-form">
         <input type="hidden" name="_subject" value="New Memory Shared — Dawn Ritterband" />
         <div class="form-row two-col">
           <div class="form-group">
