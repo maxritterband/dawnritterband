@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dawn Ritterband — In Loving Memory</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* ── PAGE-SPECIFIC: INDEX ── */
+
+    /* HERO */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 80px 2rem 5rem;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 25% 35%, rgba(43,158,179,0.10) 0%, transparent 65%),
+        radial-gradient(ellipse 60% 50% at 78% 68%, rgba(201,169,110,0.07) 0%, transparent 60%),
+        var(--teal-deep);
+      z-index: 0;
+    }
+
+    /* Subtle diagonal texture lines */
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 40px,
+        rgba(255,255,255,0.015) 40px,
+        rgba(255,255,255,0.015) 41px
+      );
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.65rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.9s ease 0.3s both;
+    }
+
+    .hero-name {
+      font-family: var(--font-display);
+      font-size: clamp(4rem, 11vw, 8rem);
+      font-weight: 300;
+      color: white;
+      letter-spacing: -0.01em;
+      line-height: 1.0;
+      margin-bottom: 0.1em;
+      opacity: 0;
+      animation: fadeUp 1s ease 0.5s both;
+    }
+
+    /* Gold shimmer underline */
+    .hero-name-underline {
+      width: 100%;
+      max-width: 480px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 0.8rem auto 1.4rem;
+      opacity: 0;
+      animation: fadeIn 1.2s ease 1s both;
+    }
+
+    .hero-dates {
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.9s ease 0.7s both;
+    }
+
+    .hero-tagline {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: clamp(1.1rem, 2.2vw, 1.5rem);
+      color: rgba(255,255,255,0.6);
+      font-weight: 300;
+      max-width: 500px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.7;
+      opacity: 0;
+      animation: fadeUp 0.9s ease 0.9s both;
+    }
+
+    .hero-cta-row {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.9s ease 1.1s both;
+    }
+
+    .hero-cta-row .btn { margin-top: 0; }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      font-size: 1.4rem;
+      color: rgba(255,255,255,0.25);
+      animation: bob 2.5s ease-in-out infinite, fadeIn 1s ease 1.5s both;
+      opacity: 0;
+      z-index: 1;
+    }
+
+    /* TRIBUTE */
+    .tribute {
+      padding: 6rem 1.5rem;
+      background: var(--ivory);
+    }
+    .tribute-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+    .tribute-body p {
+      font-family: var(--font-display);
+      font-size: clamp(1.1rem, 1.8vw, 1.3rem);
+      font-weight: 300;
+      line-height: 1.95;
+      color: var(--slate);
+      margin-bottom: 1.5rem;
+    }
+    .tribute-aside {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      padding-top: 0.5rem;
+    }
+    .tribute-stat {
+      background: var(--teal-wash);
+      border-left: 3px solid var(--teal);
+      padding: 1.4rem 1.6rem;
+      border-radius: 0 4px 4px 0;
+    }
+    .tribute-stat-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--teal-dark);
+      margin-bottom: 0.25rem;
+    }
+    .tribute-stat-value {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 400;
+      color: var(--charcoal);
+    }
+
+    /* GALLERY */
+    .gallery {
+      padding: 6rem 1.5rem;
+      background: var(--teal-deep);
+    }
+    .gallery h2,
+    .gallery .section-label { color: white; }
+    .gallery .section-label { color: var(--teal); }
+    .gallery-intro {
+      color: rgba(255,255,255,0.5);
+      font-size: 0.9rem;
+      font-style: italic;
+      margin-bottom: 2.5rem;
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 0.75rem;
+    }
+    .gallery-grid img {
+      width: 100%;
+      height: 260px;
+      object-fit: cover;
+      border-radius: 3px;
+      display: block;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    .gallery-grid img:hover { transform: scale(1.02); opacity: 0.92; }
+    .gallery-placeholder {
+      height: 260px;
+      background: rgba(43,158,179,0.12);
+      border: 1.5px dashed rgba(43,158,179,0.4);
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .gallery-placeholder span {
+      font-size: 0.65rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(43,158,179,0.5);
+    }
+
+    /* MEMORIES */
+    .memories {
+      padding: 6rem 1.5rem;
+      background: var(--warm-white);
+    }
+    .memories-sub {
+      color: var(--warm-gray);
+      max-width: 520px;
+      margin: 0 auto 2.5rem;
+    }
+    .memories-display {
+      margin-top: 3.5rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid var(--border);
+    }
+    .memories-display-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--warm-gray);
+      margin-bottom: 1.5rem;
+    }
+    .memory-card {
+      background: var(--ivory);
+      border-left: 3px solid var(--gold);
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 1.25rem;
+      border-radius: 0 4px 4px 0;
+    }
+    .memory-quote {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: clamp(1rem, 1.7vw, 1.2rem);
+      color: var(--slate);
+      line-height: 1.85;
+      margin-bottom: 0.7rem;
+      font-weight: 300;
+    }
+    .memory-attribution {
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      color: var(--warm-gray);
+    }
+    .memory-name { font-weight: 500; color: var(--teal-dark); }
+
+    /* Responsive */
+    @media (max-width: 780px) {
+      .tribute-inner {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="site-nav">
+    <a href="index.html" class="nav-wordmark"><em>Dawn</em> Ritterband</a>
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="celebration.html">Celebration of Life</a></li>
+      <li><a href="celebration.html#rsvp" class="btn" style="margin-top:0; padding: 0.5rem 1.25rem; font-size:0.65rem;">RSVP</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">In Loving Memory</p>
+      <h1 class="hero-name">Dawn<br>Ritterband</h1>
+      <div class="hero-name-underline"></div>
+      <p class="hero-dates">June 15, 1971 &nbsp;&bull;&nbsp; February 17, 2026</p>
+      <p class="hero-tagline">
+        <!--✏️ Replace with a personal tagline, a favorite quote of hers, or a few words that capture her -->
+        A woman of boundless warmth, laughter, and love.
+      </p>
+      <div class="hero-cta-row">
+        <a href="#memories" class="btn">Share a Memory</a>
+        <a href="celebration.html" class="btn btn-outline">Celebration of Life</a>
+      </div>
+    </div>
+    <span class="hero-scroll" aria-hidden="true">&#8964;</span>
+  </section>
+
+  <!-- TRIBUTE -->
+  <section class="tribute" id="tribute">
+    <div class="container">
+      <div class="tribute-inner reveal">
+        <div class="tribute-body">
+          <span class="section-label">About Dawn</span>
+          <h2>A Life Beautifully Lived</h2>
+          <hr class="section-divider" />
+          <!--
+            ✏️ EDIT THIS SECTION
+            Replace the placeholder paragraphs with Dawn's real biography,
+            the things she loved, who she was to her family and community.
+          -->
+          <p>
+            Dawn Ritterband was a woman who filled every room she entered with light. Whether she was laughing with friends, caring deeply for family, or lending a hand to someone who needed it, she showed up fully — present, warm, and real.
+          </p>
+          <p>
+            She lived her life with an open heart and a generous spirit. Those who knew her will remember her smile, her humor, and her remarkable ability to make people feel seen and loved just as they were.
+          </p>
+          <p>
+            She is deeply missed, and dearly loved — by her family, her friends, and all who had the gift of knowing her.
+          </p>
+          <!-- Add more paragraphs here -->
+        </div>
+        <div class="tribute-aside">
+          <!--
+            ✏️ EDIT THESE STAT CARDS
+            These are a nice way to highlight meaningful facts about her life —
+            her hometown, her profession, her passions, her family. Edit freely.
+          -->
+          <div class="tribute-stat">
+            <div class="tribute-stat-label">Born</div>
+            <div class="tribute-stat-value">June 15, 1971</div>
+          </div>
+          <div class="tribute-stat">
+            <div class="tribute-stat-label">Passed</div>
+            <div class="tribute-stat-value">February 17, 2026</div>
+          </div>
+          <div class="tribute-stat">
+            <div class="tribute-stat-label">Hometown</div>
+            <div class="tribute-stat-value"><!-- ✏️ Add her hometown --></div>
+          </div>
+          <div class="tribute-stat">
+            <div class="tribute-stat-label">Known For</div>
+            <div class="tribute-stat-value"><!-- ✏️ e.g. "Her laugh, her cooking, her kindness" --></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery" id="gallery">
+    <div class="container">
+      <div class="reveal">
+        <span class="section-label center">A Life in Pictures</span>
+        <h2 class="center">Photo Gallery</h2>
+        <hr class="section-divider center" />
+        <p class="gallery-intro center">
+          <!--
+            ✏️ Add your photos to this repo and replace the placeholder tiles below
+            with <img src="photos/your-photo.jpg" alt="Caption"> tags.
+          -->
+          Upload photos to your repo's /photos folder and swap in the real images below.
+        </p>
+      </div>
+      <div class="gallery-grid reveal">
+        <!-- Replace each placeholder with: <img src="photos/filename.jpg" alt="Description"> -->
+        <div class="gallery-placeholder"><span>Add a photo</span></div>
+        <div class="gallery-placeholder"><span>Add a photo</span></div>
+        <div class="gallery-placeholder"><span>Add a photo</span></div>
+        <div class="gallery-placeholder"><span>Add a photo</span></div>
+        <div class="gallery-placeholder"><span>Add a photo</span></div>
+        <div class="gallery-placeholder"><span>Add a photo</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MEMORIES WALL -->
+  <section class="memories" id="memories">
+    <div class="container narrow">
+      <div class="reveal">
+        <span class="section-label center">Share a Memory</span>
+        <h2 class="center">Remembering Dawn</h2>
+        <hr class="section-divider center" />
+        <p class="memories-sub center">
+          We'd love to hear your stories and the ways Dawn touched your life. Every memory is a gift to the family.
+        </p>
+      </div>
+
+      <!--
+        ✏️ SETUP: Go to formspree.io, create a free account, create a new form,
+        and replace YOUR_MEMORIES_FORM_ID with your actual form ID.
+      -->
+      <form class="form-box reveal" action="https://formspree.io/f/YOUR_MEMORIES_FORM_ID" method="POST" id="memory-form">
+        <input type="hidden" name="_subject" value="New Memory Shared — Dawn Ritterband" />
+        <div class="form-row two-col">
+          <div class="form-group">
+            <label for="mem-name">Your Name</label>
+            <input type="text" id="mem-name" name="name" placeholder="Your full name" required />
+          </div>
+          <div class="form-group">
+            <label for="mem-relation">How did you know Dawn?</label>
+            <input type="text" id="mem-relation" name="relation" placeholder="e.g. Friend, colleague, family" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="mem-text">Your Memory</label>
+          <textarea id="mem-text" name="memory" rows="5" placeholder="Share a story, a moment, or what Dawn meant to you..." required></textarea>
+        </div>
+        <button type="submit" class="btn">Share Your Memory</button>
+      </form>
+
+      <div class="memories-display reveal">
+        <p class="memories-display-label">Memories shared by those who loved her</p>
+        <!--
+          ✏️ As memory submissions arrive via Formspree, copy them in below
+          as .memory-card blocks. The placeholder below shows the format.
+        -->
+        <div class="memory-card">
+          <p class="memory-quote">"Dawn had this laugh that was completely contagious — the kind that made you laugh even if you hadn't heard the joke yet. I'll carry that with me always."</p>
+          <div class="memory-attribution">
+            <span class="memory-name">A dear friend</span>
+          </div>
+        </div>
+        <!-- Add more .memory-card elements here as submissions come in -->
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <p class="footer-name">Dawn Ritterband</p>
+    <p class="footer-dates">June 15, 1971 &nbsp;&bull;&nbsp; February 17, 2026</p>
+    <p class="footer-quote">
+      <!-- ✏️ Optional: add a meaningful quote or phrase -->
+      Forever in our hearts.
+    </p>
+    <ul class="footer-nav">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="celebration.html">Celebration of Life</a></li>
+      <li><a href="celebration.html#rsvp">RSVP</a></li>
+    </ul>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
