@@ -18,7 +18,7 @@ document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
 // --- Airtable config ---
 // ✏️ Replace these two values with your own from Airtable
-const AIRTABLE_TOKEN   = 'pats2g7i4eTQeCijr';
+const AIRTABLE_TOKEN   = 'pats2g7i4eTQeCijr.6f348dc358571db5d95ab75cf51924524e1d27ca74381f0f0f039ba7c5e097f2';
 const AIRTABLE_BASE_ID = 'appIzjo8pOj3EZZoi';
 const AIRTABLE_TABLE   = 'Memories';
 const AIRTABLE_URL     = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${AIRTABLE_TABLE}`;
