@@ -137,6 +137,11 @@ const AIRTABLE_HEADERS = {
   const form = document.getElementById('rsvp-form');
   if (!form) return;
 
+  // Set form action from config.js
+  if (typeof RSVP_FORM_ID !== 'undefined') {
+    form.action = `https://formspree.io/f/${RSVP_FORM_ID}`;
+  }
+
   const EVENT = {
     title:      "Celebration of Life — Dawn Ritterband",
     location:   "6672 Blenheim Road, Scottsville, VA 24590",
