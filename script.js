@@ -348,6 +348,10 @@ const AIRTABLE_HEADERS = {
 // --- Auto-open lightbox if loaded via /rsvp redirect ---
 (function () {
   if (new URLSearchParams(window.location.search).get('rsvp') === '1') {
-    window.addEventListener('load', () => document.getElementById('invitation-trigger')?.click());
+    // Use a short delay to ensure the lightbox JS has fully initialised
+    setTimeout(function () {
+      var trigger = document.getElementById('invitation-trigger');
+      if (trigger) trigger.click();
+    }, 400);
   }
 })();
