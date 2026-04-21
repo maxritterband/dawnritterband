@@ -137,10 +137,7 @@ const AIRTABLE_HEADERS = {
   const form = document.getElementById('rsvp-form');
   if (!form) return;
 
-  // Set form action from config.js
-  if (typeof RSVP_FORM_ID !== 'undefined') {
-    form.action = `https://formspree.io/f/${RSVP_FORM_ID}`;
-  }
+  const RSVP_URL = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/RSVPs`;
 
   const EVENT = {
     title:      "Celebration of Life — Dawn Ritterband",
@@ -211,14 +208,28 @@ const AIRTABLE_HEADERS = {
     btn.textContent = 'Sending…';
     btn.disabled = true;
 
-    const attending   = form.querySelector('[name="attending"]').value;
+    const name      = form.querySelector('[name="name"]').value.trim();
+    const email     = form.querySelector('[name="email"]').value.trim();
+    const attending = form.querySelector('[name="attending"]').value;
+    const guests    = form.querySelector('[name="guests"]').value;
+    const note      = form.querySelector('[name="note"]').value.trim();
     const isAttending = attending === 'yes' || attending === 'maybe';
 
     try {
-      const res = await fetch(form.action, {
+      const res = await fetch(RSVP_URL, {
         method: 'POST',
-        body: new FormData(form),
-        headers: { 'Accept': 'application/json' }
+        headers: AIRTABLE_HEADERS,
+        body: JSON.stringify({
+          records: [{
+            fields: {
+              'Name':      name,
+              'Email':     email,
+              'Attending': attending,
+              'Guests':    parseInt(guests) || 1,
+              'Note':      note
+            }
+          }]
+        })
       });
 
       if (res.ok) {
@@ -227,10 +238,13 @@ const AIRTABLE_HEADERS = {
         const appleBtn = document.getElementById('cal-apple');
         if (appleBtn) appleBtn.addEventListener('click', downloadIcs);
       } else {
+        const err = await res.json();
+        console.error('Airtable RSVP error:', err);
         btn.textContent = 'Something went wrong — please try again.';
         btn.disabled = false;
       }
-    } catch {
+    } catch (e) {
+      console.error('RSVP submit error:', e);
       btn.textContent = 'Error sending — please try again.';
       btn.disabled = false;
     }
