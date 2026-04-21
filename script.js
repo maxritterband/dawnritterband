@@ -3,7 +3,7 @@
 // =============================================
 
 
-// -- Scroll reveal --
+// --- Scroll reveal ---
 const revealObserver = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
@@ -39,7 +39,8 @@ const AIRTABLE_HEADERS = {
       // Only fetch records where "Show on Site" is checked
       const params = new URLSearchParams({
         filterByFormula: '{Show on Site}=1',
-        sort: '[{"field":"Name","direction":"asc"}]'
+        'sort[0][field]': 'Name',
+        'sort[0][direction]': 'asc'
       });
       const res  = await fetch(`${AIRTABLE_URL}?${params}`, { headers: AIRTABLE_HEADERS });
       const data = await res.json();
