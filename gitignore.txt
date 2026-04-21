@@ -1,0 +1,2 @@
+# Keep Airtable credentials off GitHub
+config.js
