@@ -16,7 +16,71 @@ const revealObserver = new IntersectionObserver(entries => {
 document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
 
-// --- Memory form ---
+// --- Airtable config ---
+// ✏️ Replace these two values with your own from Airtable
+const AIRTABLE_TOKEN   = 'pats2g7i4eTQeCijr';
+const AIRTABLE_BASE_ID = 'appIzjo8pOj3EZZoi';
+const AIRTABLE_TABLE   = 'Memories';
+const AIRTABLE_URL     = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${AIRTABLE_TABLE}`;
+const AIRTABLE_HEADERS = {
+  'Authorization': `Bearer ${AIRTABLE_TOKEN}`,
+  'Content-Type': 'application/json'
+};
+
+
+// --- Load and display approved memories ---
+(function () {
+  const display  = document.getElementById('memories-display');
+  const list     = document.getElementById('memories-list');
+  const loading  = document.getElementById('memories-loading');
+  const empty    = document.getElementById('memories-empty');
+  if (!list) return;
+
+  async function loadMemories() {
+    try {
+      // Only fetch records where "Show on Site" is checked
+      const params = new URLSearchParams({
+        filterByFormula: '{Show on Site}=1',
+        sort: '[{"field":"Name","direction":"asc"}]'
+      });
+      const res  = await fetch(`${AIRTABLE_URL}?${params}`, { headers: AIRTABLE_HEADERS });
+      const data = await res.json();
+
+      loading.style.display = 'none';
+
+      if (!data.records || data.records.length === 0) {
+        empty.style.display = 'block';
+        return;
+      }
+
+      display.style.display = 'block';
+      list.innerHTML = data.records.map(r => {
+        const f        = r.fields;
+        const name     = f['Name']     || 'Anonymous';
+        const relation = f['Relation'] || '';
+        const memory   = f['Memory']   || '';
+        return `
+          <div class="memory-card">
+            <p class="memory-quote">"${memory}"</p>
+            <div class="memory-attribution">
+              <span class="memory-name">${name}</span>
+              ${relation ? `<span class="memory-relation"> &mdash; ${relation}</span>` : ''}
+            </div>
+          </div>
+        `;
+      }).join('');
+
+    } catch (err) {
+      loading.style.display = 'none';
+      console.error('Could not load memories:', err);
+    }
+  }
+
+  loadMemories();
+})();
+
+
+// --- Memory form — submits directly to Airtable ---
 (function () {
   const form = document.getElementById('memory-form');
   if (!form) return;
@@ -27,11 +91,24 @@ document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
     btn.textContent = 'Sending…';
     btn.disabled = true;
 
+    const name     = document.getElementById('mem-name').value.trim();
+    const relation = document.getElementById('mem-relation').value.trim();
+    const memory   = document.getElementById('mem-text').value.trim();
+
     try {
-      const res = await fetch(form.action, {
+      const res = await fetch(AIRTABLE_URL, {
         method: 'POST',
-        body: new FormData(form),
-        headers: { 'Accept': 'application/json' }
+        headers: AIRTABLE_HEADERS,
+        body: JSON.stringify({
+          records: [{
+            fields: {
+              'Name':        name,
+              'Relation':    relation,
+              'Memory':      memory,
+              'Show on Site': false   // hidden until you approve it in Airtable
+            }
+          }]
+        })
       });
 
       if (res.ok) {
@@ -43,6 +120,8 @@ document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
         `;
         form.replaceWith(box);
       } else {
+        const err = await res.json();
+        console.error('Airtable error:', err);
         btn.textContent = 'Something went wrong — please try again.';
         btn.disabled = false;
       }

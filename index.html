@@ -371,6 +371,25 @@
       text-align: center;
     }
 
+    /* Memories loading / empty states */
+    .memories-loading {
+      text-align: center;
+      padding: 2rem 0;
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--warm-gray);
+    }
+    .memories-empty {
+      text-align: center;
+      padding: 1.5rem 0 0;
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--warm-gray);
+      font-weight: 300;
+    }
+
     /* Responsive */
     @media (max-width: 780px) {
       .tribute-inner {
@@ -472,14 +491,7 @@
         <hr class="section-divider center" />
       </div>
       <div class="gallery-grid reveal">
-        <img src="photos/IMG_1021.JPG" alt="Img 1021" />
-        <img src="photos/IMG_1294.JPG" alt="Img 1294" />
-        <img src="photos/IMG_2790.JPG" alt="Img 2790" />
-        <img src="photos/IMG_2801.JPG" alt="Img 2801" />
-        <img src="photos/IMG_5639.JPG" alt="Img 5639" />
-        <img src="photos/IMG_5699.JPG" alt="Img 5699" />
-        <img src="photos/IMG_7649 2.JPG" alt="Img 7649 2" />
-        <img src="photos/IMG_8930.JPG" alt="Img 8930" />
+        <!-- Photos are managed by update_gallery.py — run it after adding images to /photos -->
       </div>
     </div>
   </section>
@@ -500,8 +512,7 @@
         ✏️ SETUP: Go to formspree.io, create a free account, create a new form,
         and replace YOUR_MEMORIES_FORM_ID with your actual form ID.
       -->
-      <form class="form-box reveal" action="https://formspree.io/f/xwvaoqva" method="POST" id="memory-form">
-        <input type="hidden" name="_subject" value="New Memory Shared — Dawn Ritterband" />
+      <form class="form-box reveal" id="memory-form">
         <div class="form-row two-col">
           <div class="form-group">
             <label for="mem-name">Your Name</label>
@@ -519,20 +530,19 @@
         <button type="submit" class="btn">Share Your Memory</button>
       </form>
 
-      <!-- MEMORIES DISPLAY
-           As submissions come in via Formspree, paste them here as .memory-card blocks:
+      <!-- Memories are loaded automatically from Airtable -->
+      <div id="memories-display" class="memories-display reveal" style="display:none;">
+        <p class="memories-display-label">Memories shared by those who loved her</p>
+        <div id="memories-list"></div>
+      </div>
 
-           <div class="memories-display reveal">
-             <p class="memories-display-label">Memories shared by those who loved her</p>
-             <div class="memory-card">
-               <p class="memory-quote">"Their memory text here."</p>
-               <div class="memory-attribution">
-                 <span class="memory-name">Their Name</span>
-                 <span class="memory-relation"> &mdash; Friend</span>
-               </div>
-             </div>
-           </div>
-      -->
+      <div id="memories-loading" class="memories-loading">
+        <span>Loading memories&hellip;</span>
+      </div>
+
+      <div id="memories-empty" class="memories-empty" style="display:none;">
+        <p>Memories will appear here once they have been shared. Be the first.</p>
+      </div>
     </div>
   </section>
 
